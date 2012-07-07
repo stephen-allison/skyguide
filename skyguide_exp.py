@@ -1,11 +1,11 @@
 __author__ = 'stephen'
 
-import ephem
+import ephem as epm
 # testing out pyephem api
 def test():
-    obs = ephem.city('London')
+    obs = epm.city('London')
 
-    s = ephem.Saturn()
+    s = epm.Saturn()
 
     s.compute(obs)
 
