@@ -15,13 +15,16 @@ def compute_properties(bodies, observer):
         body.compute(observer)
 
 def get_solar_system_body_properties():
+    properties = ['name', 'alt', 'az', 'mag', 'radius','rise_time', 'transit_time', 'set_time']
     bodies = get_solar_system_objects()
     obs = epm.city("London")
     compute_properties(bodies, obs)
     data = {'date':str(obs.date)}
+    body_data_list = []
     for body in bodies:
-        body_data = {n: str(getattr(body, n)) for n in ['name', 'alt', 'az', 'mag', 'radius','rise_time', 'transit_time', 'set_time']}
-        data[body.name] = body_data
+        body_data = {n: str(getattr(body, n)) for n in properties}
+        body_data_list.append(body_data)
+    data['bodies'] = body_data_list
     return data
 
 def test():
