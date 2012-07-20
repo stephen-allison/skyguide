@@ -29,5 +29,23 @@ def create_plan_day(observer, bodies, times, entry_builder):
             results.append(entry_builder(body))
     return results
 
+def create_multi_day_plan(observer, bodies, times, entry_builder):
+    results = []
+    for time in times:
+        hours = hour_sequence(time)
+        plan = create_plan_day(observer, bodies, hours, entry_builder)
+        results.append(plan)
+    return results
+
 def get_body_properties(computed_body):
-    return {'az':computed_body.az}
+    return {'az':computed_body.az, 'alt':computed_body.alt}
+
+def ascii_day(day_plan):
+    def get_symbol(props):
+        if props['alt'] > 0: return '*'
+        return '.'
+    symbols = [get_symbol(p) for p in day_plan]
+    return ' '.join(symbols)
+
+def ascii_plan(plan):
+    return [ascii_day(day) for day in plan]
